@@ -72,6 +72,15 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'recommender.wsgi.application'
 
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.TokenAuthentication',
+    ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    )
+}
+
 
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases

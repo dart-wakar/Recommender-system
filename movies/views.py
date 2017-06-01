@@ -1,5 +1,5 @@
-from movies.models import Movies
-from movies.serializers import MovieSerializer,UserSerializer
+from movies.models import Movies,Preferences
+from movies.serializers import MovieSerializer,UserSerializer,PreferenceSerializer
 from rest_framework import generics
 from django.http import Http404
 from rest_framework.views import APIView
@@ -32,6 +32,7 @@ class MovieRecommendations(APIView):
         return Response(serializer.data)
 
 class UserRegister(APIView):
+    permission_classes = (AllowAny,)
     def post(self,request,format=None):
         serializer = UserSerializer(data=request.data)
         if serializer.is_valid():
@@ -46,3 +47,12 @@ class UsersList(generics.ListAPIView):
 class UserDetails(generics.RetrieveAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
+
+class PreferenceCreate(generics.CreateAPIView):
+    queryset = Preferences.objects.all()
+    serializer_class = PreferenceSerializer
+    def perform_create(self,serializer):
+        user_id = self.request.user.id
+        print user_id
+        user = User.objects.get(pk=user_id)
+        serializer.save(user=user)

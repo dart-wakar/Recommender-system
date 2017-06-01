@@ -2,6 +2,7 @@ from __future__ import unicode_literals
 
 from django.db import models
 from csvImporter.model import CsvDbModel
+from django.contrib.auth.models import User
 
 # Create your models here.
 
@@ -21,3 +22,13 @@ class Movies(models.Model):
 
     class Meta:
         ordering = ('id',)
+
+class Preferences(models.Model):
+    movie_id = models.IntegerField()
+    user = models.ForeignKey(User,related_name='preferences',on_delete=models.CASCADE)
+    created = models.DateTimeField(auto_now_add=True)
+    modified = models.DateTimeField(auto_now=True)
+    rating = models.FloatField()
+
+    class Meta:
+        ordering = ('created',)

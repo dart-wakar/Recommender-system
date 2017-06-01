@@ -8,4 +8,5 @@ urlpatterns = [
     url(r'^users/register/$',views.UserRegister.as_view()),
     url(r'^users/$',views.UsersList.as_view()),
     url(r'^users/(?P<pk>[0-9]+)/$',views.UserDetails.as_view()),
+    url(r'^preferences/create/$',views.PreferenceCreate.as_view()),
 ]
