@@ -11,4 +11,5 @@ urlpatterns = [
     url(r'^currentuser/$',views.CurrentUser.as_view()),
     url(r'^preferences/create/$',views.PreferenceCreate.as_view()),
     url(r'^preferences/$',views.PreferencesList.as_view()),
+    url(r'^preferences/list/$',views.PreferencesListRetrieve.as_view()),
 ]

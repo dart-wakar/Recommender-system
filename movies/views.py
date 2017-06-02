@@ -66,3 +66,13 @@ class PreferenceCreate(generics.CreateAPIView):
 class PreferencesList(generics.ListAPIView):
     queryset = Preferences.objects.all()
     serializer_class = PreferenceSerializer
+
+class PreferencesListRetrieve(APIView):
+    def post(self,request,format=None):
+        pk_list = request.data['ids']
+        if pk_list:
+            preferences = Preferences.objects.filter(pk__in=pk_list)
+        else:
+            preferences = Preferences.objects.all()
+        serializer = PreferenceSerializer(preferences,many=True)
+        return Response(serializer.data)
