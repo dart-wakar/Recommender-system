@@ -48,6 +48,12 @@ class UserDetails(generics.RetrieveAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
+class CurrentUser(APIView):
+    def get(self,request,format=None):
+        currentuser = self.request.user
+        serializer = UserSerializer(currentuser)
+        return Response(serializer.data)
+
 class PreferenceCreate(generics.CreateAPIView):
     queryset = Preferences.objects.all()
     serializer_class = PreferenceSerializer
@@ -56,3 +62,7 @@ class PreferenceCreate(generics.CreateAPIView):
         print user_id
         user = User.objects.get(pk=user_id)
         serializer.save(user=user)
+
+class PreferencesList(generics.ListAPIView):
+    queryset = Preferences.objects.all()
+    serializer_class = PreferenceSerializer
