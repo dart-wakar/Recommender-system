@@ -19,6 +19,16 @@ class MovieDetails(generics.RetrieveAPIView):
     queryset = Movies.objects.all()
     serializer_class = MovieSerializer
 
+class MoviesListRetrieve(APIView):
+    def post(self,request,format=None):
+        pk_list = request.data['ids']
+        if pk_list:
+            movies = Movies.objects.filter(pk__in=pk_list)
+        else:
+            movies = Movies.objects.all()
+        serializer = MovieSerializer(movies,many=True)
+        return Response(serializer.data)
+
 class MovieRecommendations(APIView):
     def post(self,request,format=None):
         movie_id = request.data['id']
