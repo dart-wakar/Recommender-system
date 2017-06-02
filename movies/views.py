@@ -12,8 +12,13 @@ from django.contrib.auth.models import User
 # Create your views here.
 
 class MoviesList(generics.ListAPIView):
-    queryset = Movies.objects.all()
     serializer_class = MovieSerializer
+    def get_queryset(self):
+        queryset = Movies.objects.all()
+        searchparam = self.request.query_params.get('searchkey',None)
+        if searchparam is not None:
+            queryset = queryset.filter(title__icontains=searchparam)
+        return queryset
 
 class MovieDetails(generics.RetrieveAPIView):
     queryset = Movies.objects.all()
