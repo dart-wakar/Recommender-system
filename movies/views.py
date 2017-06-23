@@ -12,6 +12,7 @@ from django.contrib.auth.models import User
 # Create your views here.
 
 class MoviesList(generics.ListAPIView):
+    permission_classes = (AllowAny,)
     serializer_class = MovieSerializer
     def get_queryset(self):
         queryset = Movies.objects.all()
