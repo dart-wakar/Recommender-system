@@ -11,7 +11,7 @@ class UserSerializer(serializers.ModelSerializer):
     preferences = serializers.PrimaryKeyRelatedField(many=True,queryset=Preferences.objects.all(),allow_null=True,required=False)
     class Meta:
         model = User
-        fields = ('id','username','email','first_name','last_name','password','preferences');
+        fields = ('id','username','email','first_name','last_name','password','preferences')
         write_only_fields = ('password',)
 
     def create(self,validated_data):
